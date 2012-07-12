@@ -7,13 +7,19 @@
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 
+<!-- turn.js files -->
 
 <script type="text/javascript" src="../../lib/hash.js"></script>
 <script type="text/javascript" src="../../lib/turn.js"></script>
+
+
+<!-- sample files -->
+
 <script type="text/javascript" src="js/steve-jobs.js"></script>
 
 <link type="text/css" rel="stylesheet" href="css/jquery.ui.css"></link>
 <link type="text/css" rel="stylesheet" href="css/steve-jobs.css"></link>
+
 </head>
 <body>
 
@@ -153,7 +159,7 @@
 
 		flipbook.turn({
 			elevation: 50,
-			acceleration: true,
+			acceleration: !isChrome(),
 			gradients: !$.isTouch,
 			autoCenter: true,
 			duration: 1000,

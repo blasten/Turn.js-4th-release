@@ -2,8 +2,50 @@ Turn.js
 www.turnjs.com
 
 ------------------------------------------------------
+Turn.js 4.0.6 - 20012/07/10
+------------------------------------------------------
+
++ Fixed a issue of the peel method when using the single display
++ Fixed issue of using all the corners in single display mode
++ Added method version
++ Added option turnCorner
+
+------------------------------------------------------
+Turn.js 4.0.5 - 20012/06/16
+------------------------------------------------------
+
++ Fixed some visualization issues of the zoom viewport
+
+------------------------------------------------------
+Turn.js 4.0.4 - 20012/06/16
+------------------------------------------------------
+
++ Fixed a problem of the method page and event start
+
+------------------------------------------------------
+Turn.js 4.0.3 - 20012/06/16
+------------------------------------------------------
+
++ Fixed minor issues of HTML4 version
+
+------------------------------------------------------
+Turn.js 4.0.2 - 20012/06/16
+------------------------------------------------------
+
++ New Zoom viewport
++ New magazine sample
+
+------------------------------------------------------
+Turn.js 4.0.1 - 20012/06/12
+------------------------------------------------------
+
++ Fixed some issues when calculating z-index of pages
++ Added method peel
+
+------------------------------------------------------
 Release 4 Commercial - 2012/06/07
 ------------------------------------------------------
+
 + Added option autoCenter
 + Added option zoom
 + Added property animating

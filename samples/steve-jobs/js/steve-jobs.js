@@ -208,3 +208,11 @@ function setPreview(view) {
 		'0px -'+((view-1)*previewHeight)+'px'
 	});
 }
+
+// http://code.google.com/p/chromium/issues/detail?id=128488
+
+function isChrome() {
+
+	return navigator.userAgent.indexOf('Chrome')!=-1;
+
+}
