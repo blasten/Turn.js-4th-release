@@ -2,6 +2,15 @@ Turn.js
 www.turnjs.com
 
 ------------------------------------------------------
+Turn.js 4.0.7 - 20012/07/12
+------------------------------------------------------
+
++ Fixed a issue of the pages method
++ Fixed issue #112
++ corner argument of the start event now returns null when using the methods next, previous and page
++ Fixed issue of certain samples in IE8
+
+------------------------------------------------------
 Turn.js 4.0.6 - 20012/07/10
 ------------------------------------------------------
 

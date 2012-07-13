@@ -277,7 +277,6 @@ body{
 	display:none;
 }
 
-
 .thumbnails .current{
 	-webkit-box-shadow:0 0 10px red;
 	-moz-box-shadow:0 0 10px red;
@@ -349,4 +348,16 @@ body{
 	-ms-border-radius:10px;
 	-o-border-radius:10px;
 	border-radius:10px;
+}
+
+.made{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	font: 14px arial;
+	line-height:40px;
+	color:#666;
+	text-align:center;
+	z-index:10;
 }

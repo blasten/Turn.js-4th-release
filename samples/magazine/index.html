@@ -3,7 +3,7 @@
 <head>
 <title>Using turn.js and the new zoom feature</title>
 <meta name="viewport" content="width = 1050, user-scalable = no" />
-
+<link rel="icon" type="image/png" href="../../pics/favicon.png" />
 <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
@@ -78,6 +78,9 @@ function loadApp() {
 
  $('#all').fadeIn(1000);
 	
+
+
+
 	// Create the flipbook
 
 	$('.magazine').turn({
@@ -107,7 +110,7 @@ function loadApp() {
 			autoCenter: true,
 
 			// The number of pages
-			
+
 			pages: 12,
 
 			// Events
@@ -125,15 +128,7 @@ function loadApp() {
 
 				// Show and hide navigation buttons
 
-				if (page==1)
-					$('.previous-button').hide();
-				else
-					$('.previous-button').show();
-					
-				if (page==pages)
-					$('.next-button').hide();
-				else
-					$('.next-button').show();
+				disableControls(page);
 				
 
 				$('.thumbnails .page-'+currentPage).
@@ -144,11 +139,14 @@ function loadApp() {
 					parent().
 					addClass('current');
 
+
+
 			},
 
 			turned: function(event, page, view) {
 
-				// Force the flipbook to be centre at this point
+				disableControls(page);
+
 				$(this).turn('center');
 
 				if (page==1) { 
@@ -167,14 +165,16 @@ function loadApp() {
 			}
 		}
 
-	}).addClass('animated');
+	});
 
 	// Zoom.js
 
 	$('.magazine-viewport').zoom({
 		flipbook: $('.magazine'),
 		max: function() { 
+			
 			return largeMagazineWidth()/$('.magazine').width();
+
 		}, 
 		when: {
 			doubleTap: function(event) {
@@ -406,10 +406,12 @@ function loadApp() {
 
 	});
 
- 	resizeViewport();
+
+	resizeViewport();
+
+	$('.magazine').addClass('animated');
 
 }
-
 
  $('#all').hide();
 
@@ -418,7 +420,7 @@ function loadApp() {
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
+	yep: ['../../lib/turn.js'],
 	nope: ['../../lib/turn.html4.min.js'],
 	both: ['../../lib/zoom.min.js'],
 	complete: loadApp

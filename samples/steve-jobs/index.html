@@ -7,18 +7,8 @@
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 
-<!-- turn.js files -->
 
 <script type="text/javascript" src="../../lib/hash.js"></script>
-<script type="text/javascript" src="../../lib/turn.js"></script>
-
-
-<!-- sample files -->
-
-<script type="text/javascript" src="js/steve-jobs.js"></script>
-
-<link type="text/css" rel="stylesheet" href="css/jquery.ui.css"></link>
-<link type="text/css" rel="stylesheet" href="css/steve-jobs.css"></link>
 
 </head>
 <body>
@@ -43,6 +33,8 @@
 
 
 <script type="text/javascript">
+
+function loadApp() {
 
 	// Mousewheel
 
@@ -257,10 +249,13 @@
 	$('#slider').slider('option', 'max', numberOfViews(flipbook));
 
 	flipbook.addClass('animated');
+}
 
 	yepnope({
 		test : Modernizr.csstransforms,
-		nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css']
+		yep: : ['../../lib/turn.js', 'css/jquery.ui.css', 'css/steve-jobs.css'],
+		nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css'],
+		complete: loadApp
 	});
 
 </script>

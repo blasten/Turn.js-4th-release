@@ -172,6 +172,18 @@ function isChrome() {
 
 }
 
+function disableControls(page) {
+		if (page==1)
+			$('.previous-button').hide();
+		else
+			$('.previous-button').show();
+					
+		if (page==$('.magazine').turn('pages'))
+			$('.next-button').hide();
+		else
+			$('.next-button').show();
+}
+
 // Set the width and height for the viewport
 
 function resizeViewport() {
@@ -179,6 +191,8 @@ function resizeViewport() {
 	var width = $(window).width(),
 		height = $(window).height(),
 		options = $('.magazine').turn('options');
+
+	$('.magazine').removeClass('animated');
 
 	$('.magazine-viewport').css({
 		width: width,
@@ -197,10 +211,15 @@ function resizeViewport() {
 
 		if (bound.width%2!==0)
 			bound.width-=1;
+
 			
 		if (bound.width!=$('.magazine').width() || bound.height!=$('.magazine').height()) {
 
 			$('.magazine').turn('size', bound.width, bound.height);
+
+			if ($('.magazine').turn('page')==1)
+				$('.magazine').turn('peel', 'br');
+
 			$('.next-button').css({height: bound.height, backgroundPosition: '-38px '+(bound.height/2-32/2)+'px'});
 			$('.previous-button').css({height: bound.height, backgroundPosition: '-4px '+(bound.height/2-32/2)+'px'});
 		}
@@ -223,6 +242,8 @@ function resizeViewport() {
 		$('.made').hide();
 	else
 		$('.made').show();
+
+	$('.magazine').addClass('animated');
 	
 }
 
