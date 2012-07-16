@@ -2,6 +2,14 @@ Turn.js
 www.turnjs.com
 
 ------------------------------------------------------
+Turn.js 4.0.8 - 20012/07/16
+------------------------------------------------------
+
++ Added option direction
++ Added method direction
++ Added property direction
+
+------------------------------------------------------
 Turn.js 4.0.7 - 20012/07/12
 ------------------------------------------------------
 
@@ -58,7 +66,8 @@ Release 4 Commercial - 2012/06/07
 + Added option autoCenter
 + Added option zoom
 + Added property animating
-+ Added property zoom+ Added method center
++ Added property zoom
++ Added method center
 + Added method destroy
 + Added method is
 + Added method zoom

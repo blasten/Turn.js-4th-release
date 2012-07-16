@@ -168,7 +168,7 @@ function zoomOut() {
 
 function moveBar(yes) {
 	if (Modernizr && Modernizr.csstransforms) {
-		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 0});
+		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 	}
 }
 

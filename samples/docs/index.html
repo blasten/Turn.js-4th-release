@@ -238,10 +238,10 @@ function loadApp() {
 }
 
 	yepnope({
-		test : Modernizr.csstransforms,
-		yep: : ['../../lib/turn.js', 'css/jquery.ui.css'],
+		test: Modernizr.csstransforms,
+		yep: ['../../lib/turn.js', 'css/jquery.ui.css'],
 		nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css'],
-		both: 'css/docs.css',
+		both: ['css/docs.css', 'js/docs.js'],
 		complete: loadApp
 	});
 

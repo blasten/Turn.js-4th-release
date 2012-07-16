@@ -7,12 +7,7 @@
 <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
-
-<!-- turn.js files -->
-
 <script type="text/javascript" src="../../lib/hash.js"></script>
-<script type="text/javascript" src="js/magazine.js"></script>
-<link type="text/css" rel="stylesheet" href="css/magazine.css"></link>
 
 </head>
 <body>
@@ -422,7 +417,7 @@ yepnope({
 	test : Modernizr.csstransforms,
 	yep: ['../../lib/turn.js'],
 	nope: ['../../lib/turn.html4.min.js'],
-	both: ['../../lib/zoom.min.js'],
+	both: ['../../lib/zoom.min.js', 'js/magazine.js', 'css/magazine.css'],
 	complete: loadApp
 });
 
