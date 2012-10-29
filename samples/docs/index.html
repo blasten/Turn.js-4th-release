@@ -11,26 +11,36 @@
 </head>
 <body>
 
-<div id="book-wrapper">
+<div id="canvas">
 	<div id="book-zoom">
-	<div class="sample-docs">
-		<div ignore="1" class="tabs"><div class="left">  </div> <div class="right"> </div></div>
-		<div class="hard"></div>
-		<div class="hard"></div>
-		<div class="hard p29"></div>
-		<div class="hard p30"></div>
+		<div class="sample-docs">
+			<div ignore="1" class="tabs"><div class="left">  </div> <div class="right"> </div></div>
+			<div class="hard"></div>
+			<div class="hard"></div>
+			<div class="hard p29"></div>
+			<div class="hard p30"></div>
+		</div>
+	</div>
+
+
+	<div id="slider-bar" class="turnjs-slider">
+		<div id="slider"></div>
 	</div>
 </div>
 
 
-<div id="slider-bar" class="turnjs-slider">
-	<div id="slider"></div>
-</div>
-</div>
-
-
 <script type="text/javascript">
+
 function loadApp() {
+
+	var flipbook = $('.sample-docs');
+
+	// Check if the CSS was already loaded
+	
+	if (flipbook.width()==0 || flipbook.height()==0) {
+		setTimeout(loadApp, 10);
+		return;
+	}
 
 	// Mousewheel
 
@@ -138,112 +148,118 @@ function loadApp() {
 
 	});
 
-	// Flipbook
-	
-	var flipbook = $('.sample-docs');
+	// Create the flipbook
 
-		flipbook.turn({
-				elevation: 50,
-				acceleration: false,
-				gradients: true,
-				autoCenter: true,
-				duration: 1000,
-				pages: 30,
-				when: {
+	flipbook.turn({
+		elevation: 50,
+		acceleration: false,
+		gradients: true,
+		autoCenter: true,
+		duration: 1000,
+		pages: 30,
+		when: {
 
-				turning: function(e, page, view) {
-					
-					var book = $(this),
-					currentPage = book.turn('page'),
-					pages = book.turn('pages');
-						
-					if (currentPage>3 && currentPage<pages-3) {
-						if (page==1) {
-							book.turn('page', 2).turn('stop').turn('page', page);
-							e.preventDefault();
-							return;
-						} else if (page==pages) {
-							book.turn('page', pages-1).turn('stop').turn('page', page);
-							e.preventDefault();
-							return;
-						}
-					} else if (page>3 && page<pages-3) {
-						if (currentPage==1) {
-							book.turn('page', 2).turn('stop').turn('page', page);
-							e.preventDefault();
-							return;
-						} else if (currentPage==pages) {
-							book.turn('page', pages-1).turn('stop').turn('page', page);
-							e.preventDefault();
-							return;
-						}
-					}
-
-					Hash.go('page/'+page).update();
-
-					if (page==1 || page==pages)
-						$('.sample-docs .tabs').hide();
-					
-
-				},
-
-				turned: function(e, page, view) {
-
-					var book = $(this);
-
-					$('#slider').slider('value', getViewNumber(book, page));
-
-					if (page!=1 && page!=book.turn('pages'))
-						$('.sample-docs .tabs').fadeIn(500);
-					else
-						$('.sample-docs .tabs').hide();
-
-					book.turn('center');
-					updateTabs();
-
-				},
-
-				start: function(e, pageObj) {
+		turning: function(e, page, view) {
 			
-					moveBar(true);
-
-				},
-
-				end: function(e, pageObj) {
+			var book = $(this),
+			currentPage = book.turn('page'),
+			pages = book.turn('pages');
 				
-					var book = $(this);
-
-					setTimeout(function() {
-						$('#slider').slider('value', getViewNumber(book));
-					}, 1);
-
-					moveBar(false);
-
-				},
-
-				missing: function (e, pages) {
-
-					for (var i = 0; i < pages.length; i++)
-						addPage(pages[i], $(this));
-
+			if (currentPage>3 && currentPage<pages-3) {
+				if (page==1) {
+					book.turn('page', 2).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				} else if (page==pages) {
+					book.turn('page', pages-1).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
 				}
-
+			} else if (page>3 && page<pages-3) {
+				if (currentPage==1) {
+					book.turn('page', 2).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				} else if (currentPage==pages) {
+					book.turn('page', pages-1).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				}
 			}
-		}). turn('page', 2);
+
+			Hash.go('page/'+page).update();
+
+			if (page==1 || page==pages)
+				$('.sample-docs .tabs').hide();
+			
+
+		},
+
+		turned: function(e, page, view) {
+
+			var book = $(this);
+
+			$('#slider').slider('value', getViewNumber(book, page));
+
+			if (page!=1 && page!=book.turn('pages'))
+				$('.sample-docs .tabs').fadeIn(500);
+			else
+				$('.sample-docs .tabs').hide();
+
+			book.turn('center');
+			updateTabs();
+
+		},
+
+		start: function(e, pageObj) {
+	
+			moveBar(true);
+
+		},
+
+		end: function(e, pageObj) {
+		
+			var book = $(this);
+
+			setTimeout(function() {
+				$('#slider').slider('value', getViewNumber(book));
+			}, 1);
+
+			moveBar(false);
+
+		},
+
+		missing: function (e, pages) {
+
+			for (var i = 0; i < pages.length; i++)
+				addPage(pages[i], $(this));
+
+		}
+	}
+	}). turn('page', 2);
 
 
 	$('#slider').slider('option', 'max', numberOfViews(flipbook));
 
 	flipbook.addClass('animated');
+
+
+	// Show canvas
+
+	$('#canvas').css({visibility: 'visible'});
 }
 
-	yepnope({
-		test: Modernizr.csstransforms,
-		yep: ['../../lib/turn.js', 'css/jquery.ui.css'],
-		nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css'],
-		both: ['css/docs.css', 'js/docs.js'],
-		complete: loadApp
-	});
+// Hide canvas
+
+$('#canvas').css({visibility: 'hidden'});
+
+yepnope({
+	test: Modernizr.csstransforms,
+	yep: ['../../lib/turn.min.js', 'css/jquery.ui.css'],
+	nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css'],
+	both: ['css/docs.css', 'js/docs.js'],
+	complete: loadApp
+});
 
 </script>
 

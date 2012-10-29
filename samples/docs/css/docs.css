@@ -1,4 +1,12 @@
-#book-wrapper{
+/* Docs sample */
+
+body{
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+
+#canvas{
 	width: 960px;
 	height: 600px;
 	margin: 100px auto;

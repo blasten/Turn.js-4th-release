@@ -30,26 +30,33 @@
 <script type="text/javascript">
 
 function loadApp() {
-	// Flipbook
+
+	// Create the flipbook
 
 	$('.flipbook').turn({
+			// Width
+
 			width:922,
 			
+			// Height
+
 			height:600,
+
+			// Elevation
 
 			elevation: 50,
 			
-			// Hardware acceleration
-
-			acceleration: !isChrome(),
-
-			// Enables gradients
+			// Enable gradients
 
 			gradients: true,
 			
 			// Auto center this flipbook
 
-			autoCenter: true
+			autoCenter: true,
+
+			display: 'single',
+
+			page: 12
 
 	});
 }
@@ -58,9 +65,9 @@ function loadApp() {
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
+	yep: ['../../lib/turn.js'],
 	nope: ['../../lib/turn.html4.min.js'],
-	both: ['js/basic.js', 'css/basic.css'],
+	both: ['css/basic.css'],
 	complete: loadApp
 });
 

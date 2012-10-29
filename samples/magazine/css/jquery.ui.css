@@ -37,7 +37,7 @@
 	-ms-border-radius:5px;
 
 	transform:translate3d(0px, 50px, 0px) scale(0.1, 0.1);
-	transition:transform 0.2s;
+	transition:transform: 0.2s;
 	border-radius:5px;
 }
 

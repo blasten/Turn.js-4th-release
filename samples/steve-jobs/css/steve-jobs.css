@@ -21,7 +21,7 @@ body, ul, table, form{
 	transition:margin-left 0.2s ease-in-out;
 }
 
-#book-wrapper{
+#canvas{
 	width: 960px;
 	height: 600px;
 	margin: 100px auto;
@@ -38,9 +38,6 @@ body, ul, table, form{
 .sj-book{
 	width:960px;
 	height:600px;
-	background-image:url(pics/spine.png);
-	background-repeat:repeat-y;
-	background-position:479px 0;
 }
 
 .sj-book h1{

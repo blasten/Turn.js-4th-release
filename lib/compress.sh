@@ -3,13 +3,19 @@
 
 SCRIPTS=("turn" "turn.html4" "zoom" "scissor")
 SCRIPTS_LEN=${#SCRIPTS[@]}
-SCRIPTS_COMMENT="/* turn.js | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license-4.txt */"
+SCRIPTS_COMMENT="/* turn.js 4.0.9 | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license.txt */"
+
+echo -e "${SCRIPTS_COMMENT}\n" > comment.js
 
 for (( i=0; i<${SCRIPTS_LEN}; i++ ));
 do
 
-	closure --js ${SCRIPTS[$i]}.js > ${SCRIPTS[$i]}.min.js
-	echo -e "${SCRIPTS_COMMENT}\r\n$(cat ${SCRIPTS[$i]}.min.js)" > ${SCRIPTS[$i]}.min.js
+	java -jar "compiler.jar" --js ${SCRIPTS[$i]}.js > ${SCRIPTS[$i]}.closure.js
+
+	cat comment.js ${SCRIPTS[$i]}.closure.js  > ${SCRIPTS[$i]}.min.js 
+
+	rm ${SCRIPTS[$i]}.closure.js
+
 	m=$(ls -la ${SCRIPTS[$i]}.min.js | awk '{ print $5}')
 	gzip -nfc --best ${SCRIPTS[$i]}.min.js > ${SCRIPTS[$i]}.min.js.gz
 	g=$(ls -la ${SCRIPTS[$i]}.min.js.gz | awk '{ print $5}')
@@ -21,4 +27,7 @@ do
 		rm ${SCRIPTS[$i]}.min.js
 	fi
 
+
 done
+
+rm comment.js

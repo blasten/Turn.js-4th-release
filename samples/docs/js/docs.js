@@ -71,7 +71,7 @@ function getViewNumber(book, page) {
 
 function moveBar(yes) {
 	if (Modernizr && Modernizr.csstransforms) {
-		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 0});
+		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 	}
 }
 
@@ -81,30 +81,31 @@ function setPreview(view) {
 		previewHeight = 73,
 		previewSrc = 'pics/preview.jpg',
 		preview = $(_thumbPreview.children(':first')),
-		numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2;
+		numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
+		width = (numPages==1) ? previewWidth/2 : previewWidth;
 
-
-	if (preview.css('background-image')=='none') {
-		
-		var width = (numPages==1) ? previewWidth/2 : previewWidth;
-
-		_thumbPreview.
-			addClass('no-transition').
-			css({width: width + 15,
-				height: previewHeight + 15,
-				top: -previewHeight - 30,
-				left: ($($('#slider').children(':first')).width() - width - 15)/2
-			});
-		
-		preview.css({backgroundImage: 'url(' + previewSrc + ')',
-			width: width,
-			height: previewHeight
+	_thumbPreview.
+		addClass('no-transition').
+		css({width: width + 15,
+			height: previewHeight + 15,
+			top: -previewHeight - 30,
+			left: ($($('#slider').children(':first')).width() - width - 15)/2
 		});
 
+	preview.css({
+		width: width,
+		height: previewHeight
+	});
+
+	if (preview.css('background-image')==='' ||
+		preview.css('background-image')=='none') {
+
+		preview.css({backgroundImage: 'url(' + previewSrc + ')'});
 
 		setTimeout(function(){
 			_thumbPreview.removeClass('no-transition');
 		}, 0);
+
 	}
 
 	preview.css({backgroundPosition:

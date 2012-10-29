@@ -33,10 +33,6 @@ body{
 	display:none;
 }
 
-.magazine-viewport .zoom-in .region{
-	display:none;
-}
-
 .magazine .region{
 	position:absolute;
 	overflow:hidden;
@@ -325,7 +321,7 @@ body{
 	float:left;
 }
 
-.esc{
+.exit-message{
 	position: absolute;
 	top:10px;
 	left:0;
@@ -334,7 +330,7 @@ body{
 	z-index:10000;
 }
 
-.esc > div{
+.exit-message > div{
 	width:140px;
 	height:30px;
 	margin:auto;
@@ -350,14 +346,39 @@ body{
 	border-radius:10px;
 }
 
-.made{
+.zoom-icon{
 	position:absolute;
-	top:0;
+	z-index:1000;
+	width:22px;
+	height:22px;
+	top:10px;
+	right:10px;
+	background-image:url(../pics/zoom-icons.png);
+	background-size:88px 22px;
+}
+
+.zoom-icon-in{
+	background-position:0 0;
+	cursor: pointer;
+}
+
+.zoom-icon-in.zoom-icon-in-hover{
+	background-position:-22px 0;
+	cursor: pointer;
+}
+
+.zoom-icon-out{
+	background-position:-44px 0;
+}
+
+.zoom-icon-out.zoom-icon-out-hover{
+	background-position:-66px 0;
+	cursor: pointer;
+}
+
+.bottom{
+	position:absolute;
 	left:0;
+	bottom:0;
 	width:100%;
-	font: 14px arial;
-	line-height:40px;
-	color:#666;
-	text-align:center;
-	z-index:10;
 }

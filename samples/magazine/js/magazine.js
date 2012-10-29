@@ -54,6 +54,26 @@ function loadPage(page, pageElement) {
 
 }
 
+// Zoom in / Zoom out
+
+function zoomTo(event) {
+
+		setTimeout(function() {
+			if ($('.magazine-viewport').data().regionClicked) {
+				$('.magazine-viewport').data().regionClicked = false;
+			} else {
+				if ($('.magazine-viewport').zoom('value')==1) {
+					$('.magazine-viewport').zoom('zoomIn', event);
+				} else {
+					$('.magazine-viewport').zoom('zoomOut');
+				}
+			}
+		}, 1);
+
+}
+
+
+
 // Load regions
 
 function loadRegions(page, element) {
@@ -87,17 +107,29 @@ function addRegion(region, pageElement) {
 	reg.appendTo(pageElement);
 }
 
+// Process click on a region
+
 function regionClick(event) {
 
 	var region = $(event.target);
+
 	if (region.hasClass('region')) {
+
+		$('.magazine-viewport').data().regionClicked = true;
+		
+		setTimeout(function() {
+			$('.magazine-viewport').data().regionClicked = false;
+		}, 100);
 		
 		var regionType = $.trim(region.attr('class').replace('region', ''));
 
 		return processRegion(region, regionType);
+
 	}
 
 }
+
+// Process the data of every region
 
 function processRegion(region, regionType) {
 
@@ -245,6 +277,63 @@ function resizeViewport() {
 
 	$('.magazine').addClass('animated');
 	
+}
+
+
+// Number of views in a flipbook
+
+function numberOfViews(book) {
+	return book.turn('pages') / 2 + 1;
+}
+
+// Current view in a flipbook
+
+function getViewNumber(book, page) {
+	return parseInt((page || book.turn('page'))/2 + 1, 10);
+}
+
+function moveBar(yes) {
+	if (Modernizr && Modernizr.csstransforms) {
+		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
+	}
+}
+
+function setPreview(view) {
+
+	var previewWidth = 112,
+		previewHeight = 73,
+		previewSrc = 'pages/preview.jpg',
+		preview = $(_thumbPreview.children(':first')),
+		numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
+		width = (numPages==1) ? previewWidth/2 : previewWidth;
+
+	_thumbPreview.
+		addClass('no-transition').
+		css({width: width + 15,
+			height: previewHeight + 15,
+			top: -previewHeight - 30,
+			left: ($($('#slider').children(':first')).width() - width - 15)/2
+		});
+
+	preview.css({
+		width: width,
+		height: previewHeight
+	});
+
+	if (preview.css('background-image')==='' ||
+		preview.css('background-image')=='none') {
+
+		preview.css({backgroundImage: 'url(' + previewSrc + ')'});
+
+		setTimeout(function(){
+			_thumbPreview.removeClass('no-transition');
+		}, 0);
+
+	}
+
+	preview.css({backgroundPosition:
+		'0px -'+((view-1)*previewHeight)+'px'
+	});
 }
 
 // Width of the flipbook when zoomed in
