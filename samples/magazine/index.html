@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
 <title>Using turn.js and the new zoom feature</title>
 <meta name="viewport" content="width = 1050, user-scalable = no" />
-<link rel="icon" type="image/png" href="../../pics/favicon.png" />
 <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../../lib/hash.js"></script>
@@ -185,13 +188,6 @@ function loadApp() {
 		}, 
 
 		when: {
-			changing: function(event, newZoom, oldZoom) {
-
-			},
-
-			scrolling: function(event, left, top) {
-
-			},
 
 			swipeLeft: function() {
 
@@ -461,7 +457,7 @@ function loadApp() {
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
+	yep: ['../../lib/turn.js'],
 	nope: ['../../lib/turn.html4.min.js'],
 	both: ['../../lib/zoom.min.js', 'js/magazine.js', 'css/magazine.css'],
 	complete: loadApp

@@ -1,9 +1,12 @@
 #/bin/sh
+# Requires Closure Compiler Application
+# https://developers.google.com/closure/compiler/docs/gettingstarted_app
+
 # --compilation_level ADVANCED_OPTIMIZATIONS 
 
 SCRIPTS=("turn" "turn.html4" "zoom" "scissor")
 SCRIPTS_LEN=${#SCRIPTS[@]}
-SCRIPTS_COMMENT="/* turn.js 4.0.9 | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license.txt */"
+SCRIPTS_COMMENT="/* turn.js 4.1.0 | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license.txt */"
 
 echo -e "${SCRIPTS_COMMENT}\n" > comment.js
 
@@ -26,7 +29,6 @@ do
 	if [ "--test" == "$1" ]; then
 		rm ${SCRIPTS[$i]}.min.js
 	fi
-
 
 done
 

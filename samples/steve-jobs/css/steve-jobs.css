@@ -358,3 +358,18 @@ body, ul, table, form{
 	margin-top: 7px;
 	margin-left:18px;
 }
+
+.ie8 .sj-book .even,
+.ie9 .sj-book .even{
+	background-image:url(../pics/gradient-page-left.jpg);
+	background-position:right top;
+	background-repeat:repeat-y;
+}
+
+.ie8 .sj-book .odd,
+.ie9 .sj-book .odd{
+	background-image:url(../pics/gradient-page-right.jpg);
+	background-position:left top;
+	background-repeat:repeat-y;
+}
+
