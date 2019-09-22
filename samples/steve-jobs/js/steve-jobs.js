@@ -82,7 +82,7 @@ function zoomThis(pic) {
 
 	var	position, translate,
 		tmpContainer = $('<div />', {'class': 'zoom-pic'}),
-		transitionEnd = $.cssTransitionEnd(),
+		transitionEnd = 'transitionend',
 		tmpPic = $('<img />'),
 		zCenterX = $('#book-zoom').width()/2,
 		zCenterY = $('#book-zoom').height()/2,
@@ -92,7 +92,7 @@ function zoomThis(pic) {
 			top: pic.offset().top - bookPos.top
 		},
 		completeTransition = function() {
-			$('#book-zoom').unbind(transitionEnd);
+			$('#book-zoom').off(transitionEnd);
 
 			if ($('.sj-book').data().zoomIn) {
 				tmpContainer.appendTo($('body'));
@@ -116,7 +116,7 @@ function zoomThis(pic) {
 		
 		tmpContainer.click(zoomOut);
 
-		tmpPic.load(function() {
+		tmpPic.on('load', function() {
 			var realWidth = $(this)[0].width,
 				realHeight = $(this)[0].height,
 				zoomFactor = realWidth/pic.width(),
@@ -145,7 +145,7 @@ function zoomThis(pic) {
 				'scale('+zoomFactor+', '+zoomFactor+')');
 
 			if (transitionEnd)
-				$('#book-zoom').bind(transitionEnd, completeTransition);
+				$('#book-zoom').on(transitionEnd, completeTransition);
 			else
 				setTimeout(completeTransition, 1000);
 
@@ -157,9 +157,9 @@ function zoomThis(pic) {
 
 function zoomOut() {
 
-	var transitionEnd = $.cssTransitionEnd(),
+	var transitionEnd = 'transitionend',
 		completeTransition = function(e) {
-			$('#book-zoom').unbind(transitionEnd);
+			$('#book-zoom').off(transitionEnd);
 			$('.sj-book').turn('disable', false);
 			$('body').css({'overflow': 'auto'});
 			moveBar(false);
@@ -167,7 +167,7 @@ function zoomOut() {
 
 	$('.sj-book').data().zoomIn = false;
 
-	$(window).unbind('resize', zoomOut);
+	$(window).off('resize', zoomOut);
 
 	moveBar(true);
 
@@ -177,16 +177,14 @@ function zoomOut() {
 	$('#slider-bar').show();
 
 	if (transitionEnd)
-		$('#book-zoom').bind(transitionEnd, completeTransition);
+		$('#book-zoom').on(transitionEnd, completeTransition);
 	else
 		setTimeout(completeTransition, 1000);
 }
 
 
 function moveBar(yes) {
-	if (Modernizr && Modernizr.csstransforms) {
-		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
-	}
+	$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 }
 
 function setPreview(view) {
@@ -225,13 +223,4 @@ function setPreview(view) {
 	preview.css({backgroundPosition:
 		'0px -'+((view-1)*previewHeight)+'px'
 	});
-}
-
-function isChrome() {
-
-	// Chrome's unsolved bug
-	// http://code.google.com/p/chromium/issues/detail?id=128488
-
-	return navigator.userAgent.indexOf('Chrome')!=-1;
-
 }

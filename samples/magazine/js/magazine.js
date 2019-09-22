@@ -28,11 +28,11 @@ function loadPage(page, pageElement) {
 
 	var img = $('<img />');
 
-	img.mousedown(function(e) {
+	img.on('mousedown', function(e) {
 		e.preventDefault();
 	});
 
-	img.load(function() {
+	img.on('load', function() {
 		
 		// Set the size
 		$(this).css({width: '100%', height: '100%'});
@@ -168,7 +168,7 @@ function loadLargePage(page, pageElement) {
 	
 	var img = $('<img />');
 
-	img.load(function() {
+	img.on('load', function() {
 
 		var prevImg = pageElement.find('img');
 		$(this).css({width: '100%', height: '100%'});
@@ -190,18 +190,10 @@ function loadSmallPage(page, pageElement) {
 
 	img.css({width: '100%', height: '100%'});
 
-	img.unbind('load');
+	img.off('load');
 	// Loadnew page
 
 	img.attr('src', 'pages/' +  page + '.jpg');
-}
-
-// http://code.google.com/p/chromium/issues/detail?id=128488
-
-function isChrome() {
-
-	return navigator.userAgent.indexOf('Chrome')!=-1;
-
 }
 
 function disableControls(page) {
@@ -293,9 +285,7 @@ function getViewNumber(book, page) {
 }
 
 function moveBar(yes) {
-	if (Modernizr && Modernizr.csstransforms) {
-		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
-	}
+	$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 }
 
 function setPreview(view) {

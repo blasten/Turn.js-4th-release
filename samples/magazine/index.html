@@ -1,16 +1,15 @@
 <!doctype html>
-<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
 <title>Using turn.js and the new zoom feature</title>
 <meta name="viewport" content="width = 1050, user-scalable = no" />
-<script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
-<script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="../../lib/hash.js"></script>
-
+<script type="text/javascript" src="../../lib/turn.min.js"></script>
+<script type="text/javascript" src="../../lib/zoom.min.js"></script>
+<script type="text/javascript" src="js/magazine.js"></script>
+<link rel="stylesheet" href="css/magazine.css">
 </head>
 <body>
 
@@ -104,7 +103,7 @@ function loadApp() {
 
 			// Hardware acceleration
 
-			acceleration: !isChrome(),
+			acceleration: true,
 
 			// Enables gradients
 
@@ -249,14 +248,14 @@ function loadApp() {
 	// Zoom event
 
 	if ($.isTouch)
-		$('.magazine-viewport').bind('zoom.doubleTap', zoomTo);
+		$('.magazine-viewport').on('zoom.doubleTap', zoomTo);
 	else
-		$('.magazine-viewport').bind('zoom.tap', zoomTo);
+		$('.magazine-viewport').on('zoom.tap', zoomTo);
 
 
 	// Using arrow keys to turn the page
 
-	$(document).keydown(function(e){
+	$(document).on('keydown',function(e){
 
 		var previous = 37, next = 39, esc = 27;
 
@@ -304,15 +303,15 @@ function loadApp() {
 	});
 
 
-	$(window).resize(function() {
+	$(window).on('resize',function() {
 		resizeViewport();
-	}).bind('orientationchange', function() {
+	}).on('orientationchange', function() {
 		resizeViewport();
 	});
 
 	// Events for thumbnails
 
-	$('.thumbnails').click(function(event) {
+	$('.thumbnails').on('click', function(event) {
 		
 		var page;
 
@@ -323,11 +322,11 @@ function loadApp() {
 	});
 
 	$('.thumbnails li').
-		bind($.mouseEvents.over, function() {
+		on($.mouseEvents.over, function() {
 			
 			$(this).addClass('thumb-hover');
 
-		}).bind($.mouseEvents.out, function() {
+		}).on($.mouseEvents.out, function() {
 			
 			$(this).removeClass('thumb-hover');
 
@@ -337,21 +336,21 @@ function loadApp() {
 	
 		$('.thumbnails').
 			addClass('thumbanils-touch').
-			bind($.mouseEvents.move, function(event) {
+			on($.mouseEvents.move, function(event) {
 				event.preventDefault();
 			});
 
 	} else {
 
-		$('.thumbnails ul').mouseover(function() {
+		$('.thumbnails ul').on('mouseover', function() {
 
 			$('.thumbnails').addClass('thumbnails-hover');
 
-		}).mousedown(function() {
+		}).on('mousedown',function() {
 
 			return false;
 
-		}).mouseout(function() {
+		}).on('mouseout',function() {
 
 			$('.thumbnails').removeClass('thumbnails-hover');
 
@@ -363,30 +362,30 @@ function loadApp() {
 	// Regions
 
 	if ($.isTouch) {
-		$('.magazine').bind('touchstart', regionClick);
+		$('.magazine').on('touchstart', regionClick);
 	} else {
-		$('.magazine').click(regionClick);
+		$('.magazine').on('click', regionClick);
 	}
 
 	// Events for the next button
 
-	$('.next-button').bind($.mouseEvents.over, function() {
+	$('.next-button').on($.mouseEvents.over, function() {
 		
 		$(this).addClass('next-button-hover');
 
-	}).bind($.mouseEvents.out, function() {
+	}).on($.mouseEvents.out, function() {
 		
 		$(this).removeClass('next-button-hover');
 
-	}).bind($.mouseEvents.down, function() {
+	}).on($.mouseEvents.down, function() {
 		
 		$(this).addClass('next-button-down');
 
-	}).bind($.mouseEvents.up, function() {
+	}).on($.mouseEvents.up, function() {
 		
 		$(this).removeClass('next-button-down');
 
-	}).click(function() {
+	}).on('click', function() {
 		
 		$('.magazine').turn('next');
 
@@ -394,23 +393,23 @@ function loadApp() {
 
 	// Events for the next button
 	
-	$('.previous-button').bind($.mouseEvents.over, function() {
+	$('.previous-button').on($.mouseEvents.over, function() {
 		
 		$(this).addClass('previous-button-hover');
 
-	}).bind($.mouseEvents.out, function() {
+	}).on($.mouseEvents.out, function() {
 		
 		$(this).removeClass('previous-button-hover');
 
-	}).bind($.mouseEvents.down, function() {
+	}).on($.mouseEvents.down, function() {
 		
 		$(this).addClass('previous-button-down');
 
-	}).bind($.mouseEvents.up, function() {
+	}).on($.mouseEvents.up, function() {
 		
 		$(this).removeClass('previous-button-down');
 
-	}).click(function() {
+	}).on('click', function() {
 		
 		$('.magazine').turn('previous');
 
@@ -425,7 +424,7 @@ function loadApp() {
 
 // Zoom icon
 
- $('.zoom-icon').bind('mouseover', function() { 
+ $('.zoom-icon').on('mouseover', function() { 
  	
  	if ($(this).hasClass('zoom-icon-in'))
  		$(this).addClass('zoom-icon-in-hover');
@@ -433,7 +432,7 @@ function loadApp() {
  	if ($(this).hasClass('zoom-icon-out'))
  		$(this).addClass('zoom-icon-out-hover');
  
- }).bind('mouseout', function() { 
+ }).on('mouseout', function() { 
  	
  	 if ($(this).hasClass('zoom-icon-in'))
  		$(this).removeClass('zoom-icon-in-hover');
@@ -441,7 +440,7 @@ function loadApp() {
  	if ($(this).hasClass('zoom-icon-out'))
  		$(this).removeClass('zoom-icon-out-hover');
 
- }).bind('click', function() {
+ }).on('click', function() {
 
  	if ($(this).hasClass('zoom-icon-in'))
  		$('.magazine-viewport').zoom('zoomIn');
@@ -452,16 +451,9 @@ function loadApp() {
 
  $('#canvas').hide();
 
+// Load turn.js
 
-// Load the HTML4 version if there's not CSS transform
-
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.js'],
-	nope: ['../../lib/turn.html4.min.js'],
-	both: ['../../lib/zoom.min.js', 'js/magazine.js', 'css/magazine.css'],
-	complete: loadApp
-});
+loadApp()
 
 </script>
 

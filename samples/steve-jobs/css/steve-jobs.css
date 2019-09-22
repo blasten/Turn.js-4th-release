@@ -15,9 +15,6 @@ body, ul, table, form{
 
 .animated{
 	-webkit-transition:margin-left 0.2s ease-in-out;
-	-moz-transition:margin-left 0.2s ease-in-out;
-	-o-transition:margin-left 0.2s ease-in-out;
-	-ms-transition:margin-left 0.2s ease-in-out;
 	transition:margin-left 0.2s ease-in-out;
 }
 
@@ -29,9 +26,6 @@ body, ul, table, form{
 
 #book-zoom{
 	-webkit-transition: -webkit-transform 1s;
-	-moz-transition: -moz-transform 1s;
-	-ms-transition: -ms-transform 1s;
-	-o-transition: -o-transform 1s;
 	transition: transform 1s;
 }
 
@@ -117,30 +111,19 @@ body, ul, table, form{
 
 .animated{
 	-webkit-transition:margin-left 0.2s ease-in-out;
-	-moz-transition:margin-left 0.2s ease-in-out;
-	-o-transition:margin-left 0.2s ease-in-out;
-	-ms-transition:margin-left 0.2s ease-in-out;
 	transition:margin-left 0.2s ease-in-out;
 }
 
 .sj-book .shadow{
 	-webkit-transition: -webkit-box-shadow 0.5s;
-	-moz-transition: -moz-box-shadow 0.5s;
-	-o-transition: -webkit-box-shadow 0.5s;
-	-ms-transition: -ms-box-shadow 0.5s;
+	transition: box-shadow 0.5s;
 
 	-webkit-box-shadow:0 0 10px #999;
-	-moz-box-shadow:0 0 10px #999;
-	-ms-box-shadow:0 0 10px #999;
-	-o-box-shadow:0 0 10px #999;
 	box-shadow:0 0 10px #999;
 }
 
 .sj-book .page{
 	-webkit-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-moz-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-ms-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-o-box-shadow:0 0 20px rgba(0,0,0,0.2);
 	box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
@@ -156,9 +139,6 @@ body, ul, table, form{
 
 .zoom-pic img{
 	-webkit-box-shadow:0 0 20px #999;
-	-moz-box-shadow:0 0 20px #999;
-	-o-box-shadow:0 0 20px #999;
-	-ms-box-shadow:0 0 20px #999;
 	box-shadow:0 0 20px #999;
 }
 
@@ -182,23 +162,13 @@ body, ul, table, form{
 	top:0;
 	left:475px;
 
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #bbb), color-stop(0.5,  #ddd), color-stop(1,  #bbb));
 	background-image:-webkit-linear-gradient(left, #bbb, #ddd, #bbb);
-	background-image:-moz-linear-gradient(left, #bbb, #ddd, #bbb);
-	background-image:-ms-linear-gradient(left, #bbb, #ddd, #bbb);
-	background-image:-o-linear-gradient(left, #bbb, #ddd, #bbb);
 	background-image:linear-gradient(left, #bbb, #ddd, #bbb);
 	
 	-webkit-transform:rotateY(-90deg);
-	-moz-transform:rotateY(-90deg);
-	-o-transform:rotateY(-90deg);
-	-ms-transform:rotateY(-90deg);
 	transform:rotateY(-90deg);
 
 	-webkit-transform-origin:top right;
-	-moz-transform-origin:top right;
-	-o-transform-origin:top right;
-	-ms-transform-origin:top right;
 	transform-origin:top right;
 	z-index:100000;
 
@@ -248,15 +218,11 @@ body, ul, table, form{
 	height:600px;
 	background-color:white;
 	-webkit-box-shadow:none;
-	-moz-box-shadow:none;
-	-ms-box-shadow:none;
 	box-shadow:none;
 }
 
 .sj-book .page-wrapper{
 	-webkit-perspective:2000px;
-	-moz-perspective: 2000px;
-	-ms-perspective: 2000px;
 	perspective: 2000px;
 }
 
@@ -268,20 +234,12 @@ body, ul, table, form{
 }
 
 .sj-book .even{
-	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #dadada));
 	background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
 	background-image:linear-gradient(left, #fff 95%, #dadada 100%);
 }
 
 .sj-book .odd{
-	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #fff), color-stop(1, #cacaca));
 	background-image:-webkit-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-moz-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-ms-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-o-linear-gradient(right, #fff 95%, #cacaca 100%);
 	background-image:linear-gradient(right, #fff 95%, #cacaca 100%);
 }
 
@@ -338,9 +296,6 @@ body, ul, table, form{
 	clear:both;
 	text-decoration:none;
 	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	-o-border-radius:10px;
-	-ms-border-radius:10px;
 	border-radius:10px;
 }
 

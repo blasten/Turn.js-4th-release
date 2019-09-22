@@ -3,7 +3,7 @@
 function loadPage(page) {
 
 	var img = $('<img />');
-	img.load(function() {
+	img.on('load', function() {
 		var container = $('.sample-docs .p'+page);
 		img.css({width: container.width(), height: container.height()});
 		img.appendTo($('.sample-docs .p'+page));
@@ -38,7 +38,7 @@ function updateTabs() {
 		view = book.turn('view');
 
 	for (var page in tabs) {
-		var isHere = $.inArray(parseInt(page, 10), view)!=-1;
+		var isHere = view.indexOf(parseInt(page, 10))!=-1;
 
 		if (page>actualPage && !isHere)
 			right.push('<a href="#page/' + page + '">' + tabs[page] + '</a>');
@@ -70,9 +70,7 @@ function getViewNumber(book, page) {
 
 
 function moveBar(yes) {
-	if (Modernizr && Modernizr.csstransforms) {
-		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
-	}
+	$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 }
 
 function setPreview(view) {

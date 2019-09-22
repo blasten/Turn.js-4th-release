@@ -4,10 +4,14 @@
 <title>Using turn.js and the new zoom feature</title>
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 <link rel="icon" type="image/png" href="../../pics/favicon.png" />
-<script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
-<script type="text/javascript" src="../../extras/jquery-ui-1.8.20.custom.min.js"></script>
-<script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../../lib/hash.js"></script>
+<script type="text/javascript" src="../../lib/turn.min.js"></script>
+<script type="text/javascript" src="../../lib/zoom.min.js"></script>
+<script type="text/javascript" src="js/magazine.js"></script>
+<link rel="stylesheet" href="css/magazine.css">
+<link rel="stylesheet" href="css/jquery.ui.css">
 </head>
 <body>
 
@@ -45,6 +49,8 @@ function loadApp() {
 		setTimeout(loadApp, 10);
 		return;
 	}
+	
+	$( "#slider" ).slider();
 	
 	// Create the flipbook
 
@@ -195,14 +201,14 @@ function loadApp() {
 	// Zoom event
 
 	if ($.isTouch)
-		$('.magazine-viewport').bind('zoom.doubleTap', zoomTo);
+		$('.magazine-viewport').on('zoom.doubleTap', zoomTo);
 	else
-		$('.magazine-viewport').bind('zoom.tap', zoomTo);
+		$('.magazine-viewport').on('zoom.tap', zoomTo);
 
 
 	// Using arrow keys to turn the page
 
-	$(document).keydown(function(e){
+	$(document).on('keydown', function(e){
 
 		var previous = 37, next = 39, esc = 27;
 
@@ -250,39 +256,39 @@ function loadApp() {
 	});
 
 
-	$(window).resize(function() {
+	$(window).on('resize',function() {
 		resizeViewport();
-	}).bind('orientationchange', function() {
+	}).on('orientationchange', function() {
 		resizeViewport();
 	});
 
 	// Regions
 
 	if ($.isTouch) {
-		$('.magazine').bind('touchstart', regionClick);
+		$('.magazine').on('touchstart', regionClick);
 	} else {
-		$('.magazine').click(regionClick);
+		$('.magazine').on('click', regionClick);
 	}
 
 	// Events for the next button
 
-	$('.next-button').bind($.mouseEvents.over, function() {
+	$('.next-button').on($.mouseEvents.over, function() {
 		
 		$(this).addClass('next-button-hover');
 
-	}).bind($.mouseEvents.out, function() {
+	}).on($.mouseEvents.out, function() {
 		
 		$(this).removeClass('next-button-hover');
 
-	}).bind($.mouseEvents.down, function() {
+	}).on($.mouseEvents.down, function() {
 		
 		$(this).addClass('next-button-down');
 
-	}).bind($.mouseEvents.up, function() {
+	}).on($.mouseEvents.up, function() {
 		
 		$(this).removeClass('next-button-down');
 
-	}).click(function() {
+	}).on('click', function() {
 		
 		$('.magazine').turn('next');
 
@@ -290,23 +296,23 @@ function loadApp() {
 
 	// Events for the next button
 	
-	$('.previous-button').bind($.mouseEvents.over, function() {
+	$('.previous-button').on($.mouseEvents.over, function() {
 		
 		$(this).addClass('previous-button-hover');
 
-	}).bind($.mouseEvents.out, function() {
+	}).on($.mouseEvents.out, function() {
 		
 		$(this).removeClass('previous-button-hover');
 
-	}).bind($.mouseEvents.down, function() {
+	}).on($.mouseEvents.down, function() {
 		
 		$(this).addClass('previous-button-down');
 
-	}).bind($.mouseEvents.up, function() {
+	}).on($.mouseEvents.up, function() {
 		
 		$(this).removeClass('previous-button-down');
 
-	}).click(function() {
+	}).on('click', function() {
 		
 		$('.magazine').turn('previous');
 
@@ -356,7 +362,7 @@ function loadApp() {
 
 // Zoom icon
 
- $('.zoom-icon').bind('mouseover', function() { 
+ $('.zoom-icon').on('mouseover', function() { 
  	
  	if ($(this).hasClass('zoom-icon-in'))
  		$(this).addClass('zoom-icon-in-hover');
@@ -364,7 +370,7 @@ function loadApp() {
  	if ($(this).hasClass('zoom-icon-out'))
  		$(this).addClass('zoom-icon-out-hover');
  
- }).bind('mouseout', function() { 
+ }).on('mouseout', function() { 
  	
  	 if ($(this).hasClass('zoom-icon-in'))
  		$(this).removeClass('zoom-icon-in-hover');
@@ -372,7 +378,7 @@ function loadApp() {
  	if ($(this).hasClass('zoom-icon-out'))
  		$(this).removeClass('zoom-icon-out-hover');
 
- }).bind('click', function() {
+ }).on('click', function() {
 
  	if ($(this).hasClass('zoom-icon-in'))
  		$('.magazine-viewport').zoom('zoomIn');
@@ -383,16 +389,9 @@ function loadApp() {
 
  $('#canvas').hide();
 
+// Load turn.js
 
-// Load the HTML4 version if there's not CSS transform
-
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
-	nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css'],
-	both: ['../../lib/zoom.min.js', 'css/jquery.ui.css', 'js/magazine.js', 'css/magazine.css'],
-	complete: loadApp
-});
+loadApp()
 
 </script>
 

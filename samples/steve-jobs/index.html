@@ -1,15 +1,14 @@
 <!doctype html>
-<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
-<script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
-<script type="text/javascript" src="../../extras/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery.min.js"></script>
+<script type="text/javascript" src="../../extras/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../../lib/hash.js"></script>
+<script type="text/javascript" src="../../lib/turn.min.js"></script>
+<script type="text/javascript" src="js/steve-jobs.js"></script>
+<link rel="stylesheet" href="css/steve-jobs.css">
+<link rel="stylesheet" href="css/jquery.ui.css">
 </head>
 <body>
 
@@ -45,37 +44,26 @@ function loadApp() {
 
 	// Mousewheel
 
-	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
+	$('#book-zoom').mousewheel(function(event) {
 
 		var data = $(this).data(),
-			step = 30,
 			flipbook = $('.sj-book'),
-			actualPos = $('#slider').slider('value')*step;
-
-		if (typeof(data.scrollX)==='undefined') {
-			data.scrollX = actualPos;
-			data.scrollPage = flipbook.turn('page');
-		}
-
-		data.scrollX = Math.min($( "#slider" ).slider('option', 'max')*step,
-			Math.max(0, data.scrollX + deltaX));
-
-		var actualView = Math.round(data.scrollX/step),
-			page = Math.min(flipbook.turn('pages'), Math.max(1, actualView*2 - 2));
-
-		if ($.inArray(data.scrollPage, flipbook.turn('view', page))==-1) {
-			data.scrollPage = page;
-			flipbook.turn('page', page);
-		}
-
-		if (data.scrollTimer)
-			clearInterval(data.scrollTimer);
+			view = flipbook.turn('view', page).filter( (page) => page != 0 ),
+			page = flipbook.turn('page'),
+			delay = 500; //ms
 		
-		data.scrollTimer = setTimeout(function(){
-			data.scrollX = undefined;
-			data.scrollPage = undefined;
-			data.scrollTimer = undefined;
-		}, 1000);
+		if(typeof(data.scrollTimer)==='undefined') data.scrollTimer = 0;
+
+		if(data.scrollTimer > event.timeStamp) return;
+
+		data.scrollTimer = event.timeStamp + delay;
+
+		if(event.deltaY > 0) page = Math.max(...view) + 1;
+		if(event.deltaY < 0) page = Math.min(...view) - 1;
+		
+		page = Math.max(Math.min(flipbook.turn('pages'),page),1);
+		
+		flipbook.turn('page', page);
 
 	});
 
@@ -137,7 +125,7 @@ function loadApp() {
 
 	// Arrows
 
-	$(document).keydown(function(e){
+	$(document).on('keydown', function(e){
 
 		var previous = 37, next = 39;
 
@@ -159,11 +147,11 @@ function loadApp() {
 
 	// Flipbook
 
-	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
+	flipbook.on(($.isTouch) ? 'touchend' : 'click', zoomHandle);
 
 	flipbook.turn({
 		elevation: 50,
-		acceleration: !isChrome(),
+		acceleration: true,
 		autoCenter: true,
 		gradients: true,
 		duration: 1000,
@@ -278,13 +266,7 @@ $('#canvas').css({visibility: 'hidden'});
 
 // Load turn.js
 
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
-	nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css'],
-	both: ['js/steve-jobs.js', 'css/jquery.ui.css', 'css/steve-jobs.css'],
-	complete: loadApp
-});
+loadApp()
 
 </script>
 

@@ -1,5 +1,33 @@
-Turn.js
-www.turnjs.com
+------------------------------------------------------
+Turn.js 4.1.1 - 2019/09/22
+------------------------------------------------------
+
++ Keep the library up to date
++ No new features or bugfix
+
+DETAILS
+	turn.js:
+		+ Removed old browsers support
+		+ Function calls:
+			- $.inArray() -> .indexOf()
+			- $.proxy() -> .bind()
+			- jQuery deprecated function call updated
+		
+	zoom.js:
+		+ Removed old browsers support
+		
+	turn.html4.js: DELETED
+
+	extras:
+		+ Modernizr: DELETED
+		+ jGestures: DELETED
+		+ jQuery Mousewheel: 3.0.6 -> 3.1.13 (LASTEST)
+		+ jQuery: 1.7 -> 3.4.1 (LASTEST)
+		+ jQueri UI: 1.8.20 -> 1.12.1 (LASTEST)
+	
+	samples:
+		+ Removed old browsers support
+		+ Fixed docs and steve-jobs mousewheel
 
 ------------------------------------------------------
 Turn.js 4.1.0 - 2012/11/65

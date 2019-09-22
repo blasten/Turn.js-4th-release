@@ -4,9 +4,9 @@
 
 # --compilation_level ADVANCED_OPTIMIZATIONS 
 
-SCRIPTS=("turn" "turn.html4" "zoom" "scissor")
+SCRIPTS=("turn" "zoom" "scissor")
 SCRIPTS_LEN=${#SCRIPTS[@]}
-SCRIPTS_COMMENT="/* turn.js 4.1.0 | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license.txt */"
+SCRIPTS_COMMENT="/* turn.js 4.1.1 | Copyright (c) 2012 Emmanuel Garcia - 2019 Raffaele Morganti | turnjs.com | turnjs.com/license.txt */"
 
 echo -e "${SCRIPTS_COMMENT}\n" > comment.js
 
