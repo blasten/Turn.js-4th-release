@@ -19,7 +19,7 @@ The API includes properties, methods and events. Most setter and getter function
 		- [odd](#odd)
 		- [own-size](#own-size)
 		- [page](#page)
-		- [p[0-9]+](#p-0-9)
+		- [p[0-9]+](#p0-9)
 		- [shadow](#shadow)
 		- [sheet](#sheet)
 * [Setting the size of the flipbook](#setting-the-size-of-the-flipbook)
@@ -415,7 +415,7 @@ Adds a page to the flipbook.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| element |  | jQuery element | DOM element for the page. |
+| element | jQuery element | DOM element for the page. |
 | pageNumber | Number | This parameter is optional and the default value is: `$(‘#flipbook’).turn(‘pages’)+1` |
 
 For example:
@@ -570,7 +570,7 @@ It returns an array of two values where the first element refers to a page from 
 
 For example, in order to add new pages dynamically, it’s necessary to use the range method:
 
-```
+```javascript
 var range = $(‘#flipbook’).turn(‘range’, 10 );
 for (var page = range[ 0 ]; page<=range[ 1 ]; page++){
 	if (!$(‘#flipbook’).turn(‘hasPage’, page)) {

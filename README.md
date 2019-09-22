@@ -42,4 +42,4 @@ jQuery 1.7 or later
 
 Released under a non-commercial BSD license
 
-[Full documentation](API-DOCUMENTATION)
+[Full documentation](API-DOCUMENTATION.md)
