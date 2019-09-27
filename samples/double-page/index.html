@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 <script type="text/javascript" src="../../extras/jquery.min.js"></script>
-<script type="text/javascript" src="../../lib/turn.min.js"></script>
+<script type="text/javascript" src="../../lib/turn5.min.js"></script>
 <script type="text/javascript" src="../../lib/scissor.min.js"></script>
 <link rel="stylesheet" href="css/double-page.css">
 </head>
@@ -41,7 +41,7 @@ function loadApp() {
 
 	// Create the flipbook
 
-	$('.flipbook').turn({
+	turn = new TurnJS('.flipbook',{
 			// Elevation
 
 			elevation: 50,

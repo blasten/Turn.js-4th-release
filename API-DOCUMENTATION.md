@@ -6,8 +6,7 @@ The turn.js API was conveniently built as a jQuery plugin, it provides access to
 The API includes properties, methods and events. Most setter and getter functions have the same name.
 
 ## Index
-
-* [Essentials](#essentials)
+* [Requirements](#requirements)
 * [Browser Support](#browser-support)
 * [Preparing the HTML](#preparing-the-html)
 * [Performance](#performance)
@@ -28,46 +27,37 @@ The API includes properties, methods and events. Most setter and getter function
 * [Ignoring elements in the flipbook](#ignoring-elements-in-the-flipbook)
 * [Corners](#corners)
 * [Constructor](#constructor)
-* [Options](#options)
+	+ [Options](#options)
 	+ [Adding options to the constructor:](#adding-options-to-the-constructor)
-* [Properties](#properties)
-	+ [List of properties](#list-of-properties)
-		- [animating](#animating)
-		- [display](#display)
-		- [page](#page-1)
-		- [pages](#pages)
-		- [size](#size)
-		- [view](#view)
-		- [zoom](#zoom)
 * [Methods](#methods)
 	+ [List of methods](#list-of-methods)
-		- [addPage](#addpage)
-		- [display](#display-1)
-		- [disable](#disable)
+		- [version](#version)
 		- [destroy](#destroy)
-		- [hasPage](#haspage)
-		- [next](#next)
-		- [is](#is)
-		- [page](#page-2)
-		- [pages](#pages-1)
-		- [peel](#peel)
-		- [previous](#previous)
-		- [range](#range)
-		- [removePage](#removepage)
-		- [resize](#resize)
-		- [size](#size-1)
-		- [stop](#stop)
-		- [zoom](#zoom-1)
-* [Events](#events)
-	+ [List of events](#list-of-events)
-		- [end](#end)
-		- [first](#first)
-		- [last](#last)
-		- [missing](#missing)
-		- [start](#start)
-		- [turning](#turning)
-		- [turned](#turned)
-		- [zooming](#zooming)
+		- [page](#page-1)
+		- [view()](#view)
+		- [pages](#pages)
+			* [add()](#add)
+			* [remove()](#remove)
+			* [count](#count)
+			* [zoom](#zoom)
+			* [size](#size)
+		- [animation](#animation)
+			* [running](#running)
+			* [peel](#peel)
+			* [next](#next)
+			* [prev](#prev)
+			* [turn()](#turn)
+		- [event](#event)
+			* [List of events](#list-of-events)
+		- [settings](#settings)
+			* [disabled](#disabled)
+			* [autoCenter](#autocenter)
+			* [direction](#direction)
+			* [display](#display)
+			* [duration](#duration)
+			* [gradients](#gradients)
+			* [elevation](#elevation)
+			* [turnCorners](#turncorners)
 
 ## Requirements
 
@@ -231,16 +221,16 @@ There’re three ways to set the size of a flipbook.
 
 	Notice that the width of the page is half the size of the flipbook.
 
-2. Using options, for example:
+2. Using constructor options, for example:
 
 	```javascript
-	$(‘#flipbook’).turn({width: 800 , height: 600 });
+	flipbook = new TurnJS({width: 800 , height: 600 });
 	```
 
 3. Using the size method, for example:
 
 	```javascript
-	$(‘#flipbook’).turn(‘size’, 800 , 600 );
+	flipbook.size = {width: 800 , height: 600 };
 	```
 
 ## Display
@@ -287,15 +277,15 @@ The corners identify every interactive region on the flipbook. For example:
 
 ## Constructor
 
-The constructor is the function that will turn the container into a flipbook. Because turn.js uses a single instance, it’s not necessary to have an external reference to it. Example:
+The constructor is the function that will turn the container into a flipbook. Example:
 
 ```javascript
-$(‘#flipbook’).turn([options]);
+flipbook = new TurnJS([options]);
 ```
 
 Notice that the constructor only has one argument called options and it’s optional.
 
-## Options
+### Options
 
 The options define characteristics of the flipbook. All the keys are optional.
 
@@ -307,7 +297,7 @@ The options define characteristics of the flipbook. All the keys are optional.
 | duration | Number | 600 | Sets the duration of the transition in milliseconds |
 | gradients | Number | true | Shows gradients and shadows during the transition. |
 | height | Number | Height of the selector | Sets the height of the selector |
-| inclination | Number | 0 | Sets the inclination of the page during the transition |
+| elevation | Number | 0 | Sets the elevation of the page during the transition |
 | page | Number | 1 | Sets the first page |
 | pages | Number | The number of pages in the DOM | Sets the number of pages |
 | when | Object | {} | Sets event listeners |
@@ -316,9 +306,9 @@ The options define characteristics of the flipbook. All the keys are optional.
 ### Adding options to the constructor:
 
 ```javascript
-$(‘#flipbook’).turn({
+flipbook = new TurnJS({
 	display: ‘double’,
-	inclination: 50 ,
+	elevation: 50 ,
 	when: {
 		turned: function(event, page, pageObj) {
 		alert(‘the current page is ’ + page);
@@ -327,463 +317,255 @@ $(‘#flipbook’).turn({
 });
 ```
 
-## Properties
-
-Syntax:
-
-```javascript
-$(‘#flipbook’).turn(‘propertyName’);
-```
-
-### List of properties
-
-#### animating
-
-Returns true when animating a page.
-
-```javascript
-$(‘#flipbook’).turn(‘animation’);
-```
-
-#### display
-
-Gets the current display. It can be single or double.
-
-```javascript
-$(‘#flipbook’).turn(‘display’);
-```
-
-#### page
-
-Gets the current page.
-
-```javascript
-$(‘#flipbook’).turn(‘page’);
-```
-
-#### pages
-
-Gets the number of pages within the flipbook
-
-```javascript
-$(‘#flipbook’).turn(‘pages’);
-```
-
-#### size
-
-Gets the size of the flipbook. It would be an object with two keys, width and height.
-
-```javascript
-$(‘#flipbook’).turn(‘size’);
-```
-
-#### view
-
-Gets the current view.
-
-```javascript
-$(‘#flipbook’).turn(‘view’);
-```
-
-#### zoom
-
-Gets the current zoom. The default value is 1.
-
-```javascript
-$(‘#flipbook’).turn(‘zoom’);
-```
-
 ## Methods
 
 Syntax:
 
 ```javascript
-$(‘#flipbook’).turn(‘method name’[, argument1, argument2]);
-```
-
-When a method doesn’t return a value, it can be connected to another methods, for example:
-
-```javascript
-$(‘#flipbook’).turn(‘method1’).turn(‘method2’);
+flipbook.method
 ```
 
 ### List of methods
 
-#### addPage
-
-Adds a page to the flipbook.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| element | jQuery element | DOM element for the page. |
-| pageNumber | Number | This parameter is optional and the default value is: `$(‘#flipbook’).turn(‘pages’)+1` |
-
-For example:
+#### version
 
 ```javascript
-element = $(‘<div />’, {class: ‘p10’});
-$(‘#flipbook’).turn(‘addPage’, element);
-```
-
-The above code is equivalent to:
-
-```javascript
-element = $(‘<div />’);
-$(‘#flipbook’).turn(‘addPage’, element, 10 );
-```
-
-#### display
-
-Set the display.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| displayMode | String | It can be single or double. Single means one page per view, meanwhile double two pages per view. |
-
-```javascript
-$(‘#flipbook’).turn(‘display’, ‘single’);
-```
-
-#### disable
-
-Disables and enables the effect. If it’s disabled, users won’t be able to change the current page.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| disable | Boolean | True to disable the effect or false to enable. |
-
-```javascript
-$(‘#flipbook’).turn(‘display’, ‘single’);
+flipbook.version;
+//replaces
+$('#flipbook').turn('version');
 ```
 
 #### destroy
 
-Destroys the flipbook. That is, it removes all the pages from the DOM and memory. For example:
-
 ```javascript
-$(‘#flipbook’).turn(‘destroy’);
-$(‘#flipbook’).turn(‘page’, 1 );
-```
-
-The last line will throw an error. You can also remove the container, for example:
-
-```javascript
-$(‘#flipbook’).turn(‘destroy’).remove();
-```
-
-#### hasPage
-
-Returns true if a page is in memory.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| pageNumber | Number | Page number. |
-
-For example:
-
-```javascript
-if ($(‘#flipbook’).turn(‘hasPage’, 1 )) {
-alert(‘Page 1 is already in the flipbook’);
-}
-```
-
-#### next
-
-Turns the view to the next one. For example:
-
-```javascript
-$(‘#flipbook’).turn(‘next’);
-```
-#### is
-
-Detects if a selector has an instance of turn.js. For example:
-
-```javascript
-if (!$(‘#flipbook’).turn(‘is’)) {
-// Create a new flipbook
-$(‘#flipbook’).turn();
-}
+flipbook.destroy;
+//replaces
+$('#flipbook').turn('destroy');
 ```
 
 #### page
 
-Turns the page.
+```javascript
+flipbook.page;
+//replaces
+$('#flipbook').turn('page');
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| page | Number | Page number. |
+flipbook.page = 10;
+//replaces
+$('#flipbook').turn('page', 10).turn('stop');
+```
 
-For example, the following example will turn the page to 10.
+#### view()
 
 ```javascript
-$(‘#flipbook’).turn(‘page’, 10 );
+flipbook.view(10);
+//replaces
+$('#flipbook').turn('view', 10);
 ```
 
 #### pages
 
-Sets the number of pages that the flipbook has. If the number of pages is less than the current one, it will remove the pages out of range.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| pages | Number | Number of pages. |
-
-For example:
+##### add()
 
 ```javascript
-$(‘#flipbook’).turn(‘hasPage’, 10 ); // It’s true.
-$(‘#flipbook’).turn(‘pages’, 5 ); // Sets 5 pages
-$(‘#flipbook’).turn(‘hasPage’, 10 ); // Returns false
+flipbook.pages.add('<div/>', 10);
+//replaces
+$('#flipbook').turn('addPage', $('<div/>'), 10);
 ```
 
-#### peel
-
-Shows a peeling corner.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| corner | String | Corner type. The corners can be: tl, tr, bl, br, r, l. |
-
-For example:
+##### remove()
 
 ```javascript
-// To show the br corner
-$(‘#flipbook’).turn(‘peel’, ‘br’);
-// To hide all the corners
-$(‘#flipbook’).turn(‘peel’, false);
+flipbook.pages.remove(10);
+//replaces
+$('#flipbook').turn('removePage', 10);
 ```
 
-#### previous
-
-Turns the view to the previous one. For example:
+##### count
 
 ```javascript
-$(‘#flipbook’).turn(‘previous’);
+flipbook.pages.count;
+//replaces
+$('#flipbook').turn('pages');
 ```
 
-#### range
-
-It returns an array of two values where the first element refers to a page from which next pages should be contained in DOM. The second element refers to the last page of the range. That is, the current range always has the following relationship: range[0] <= current page <= range[1]
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| pageNumber | Number | A page number within a range. This parameter is optional and the default value is `$(‘#flipbook’).turn(‘page’);` |
-
-For example, in order to add new pages dynamically, it’s necessary to use the range method:
+##### zoom
 
 ```javascript
-var range = $(‘#flipbook’).turn(‘range’, 10 );
-for (var page = range[ 0 ]; page<=range[ 1 ]; page++){
-	if (!$(‘#flipbook’).turn(‘hasPage’, page)) {
-		$(‘#flipbook’).turn(‘addPage’,
-		$(‘<div />’), page);
-	}
-}
+flipbook.pages.zoom;
+//replaces
+$('#flipbook').turn('zoom');
+
+flipbook.pages.zoom = 2;
+//replaces
+$('#flipbook').turn('zoom', 2);
 ```
 
-The last example will add the pages that are closest to the page 10. Assuming that display is double, those pages would be [8, 9, 10, 11, 12, 13].
-
-#### removePage
-
-Removes a page from the DOM and all its references.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| pageNumber | Number | Number of the page to remove. |
-
-
-For example:
+##### size
 
 ```javascript
-$(‘#flipbook’).turn(‘removePage’, 10 );
+flipbook.pages.size;
+//replaces
+$('#flipbook').turn('size');
+
+flipbook.pages.size = {width: 100, height: 200};
+//replaces
+$('#flipbook').turn('size', 100, 200);
 ```
 
-#### resize
+#### animation
 
-Recalculate the position of all the pages.
+##### running
 
 ```javascript
-$(‘#flipbook’).turn(‘resize’);
+flipbook.animation.running;
+//replaces
+$('#flipbook').turn('animating');
 ```
 
-#### size
-
-Sets the size of the flipbook.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| width | Number | New width for the flipbook. |
-| height | Number | New height for the flipbook. |
-
-For example:
+##### peel
 
 ```javascript
-$(‘#flipbook’).turn(‘size’, 1000 , 600 );
+flipbook.animation.peel = 'br';
+//replaces
+$('#flipbook').turn('peel', 'br');
 ```
 
-#### stop
-
-Stop the current animation. For example, it’s possible to turn to a page without having animation.
+##### next
 
 ```javascript
-$(‘#flipbook’).turn(‘page’, 10 ).turn(‘stop’);
+flipbook.animation.next;
+//replaces
+$('#flipbook').turn('next');
 ```
 
-#### zoom
-
-Increases or reduces the size of the flipbook.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| factor | Number | Factor of multiplication. For example, 2 would increase in twice the size of the flipbook; meanwhile 0.5 would reduce the size to half of its current size. |
-| duration | Number | Duration in milliseconds of the scaling animation. The default value is 500. |
-
-For example, to zoom out without animation:
+##### prev
 
 ```javascript
-$(‘#flipbook’).turn(‘zoom’, 0.5, 0 );
+flipbook.animation.prev;
+//replaces
+$('#flipbook').turn('previous');
 ```
 
-## Events
-
-The events allow you to define behaviors to specific moments. It’s possible to define events in two different ways:
-
-1. Using the when key of options
-
-	While adding event listeners, it will require to add the listeners before the constructor creates the flipbook. For example:
-
-	```javascript
-	$(‘#flipbook’).turn({
-		when: {
-			turning: function(event, page, pageObject) {
-			
-			}
-		}
-	});
-	```
-
-2. Using on
-
-	jQuery provides a on function in order to add listeners to elements. You can use on to add as many listener as you need for an event. For example:
-
-	```javascript
-	$(‘#flipbook’).on(‘turning’,
-		function(event, page, obj){
-			alert(‘Page ’+ page);
-	});
-	```
-
-3. Using the event object
-
-	The first argument that all the listener functions share is the event object, which allows you to manipulate the propagation and default action of the event. Some events are followed by an action that can be, for instance, to turn the page. Therefore, it’s possible to prevent that action by using `event.preventDefault();` within the event function. It’s not necessary to return false to prevent the default action.
-
-### List of events
-
-#### end
-
-This event is triggered after ending the motion of a page.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | Event object. |
-| page | Number | The page number |
-
-#### first
-
-This event is triggered when the current page is 1.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | Event object. |
-
-#### last
-
-This event is triggered when the current page is `$(‘#flipbook’).turn(‘pages’)`. That is, the last page.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | Event object. |
-
-#### missing
-
-This event is triggered when some pages are required in the current range.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | Event object. |
-| pages | Array | Pages that must be added. |
-
-You can use this event to add pages through addPage. For example:
+##### turn()
 
 ```javascript
-$(‘#flipbook’).on(‘missing’, function(event, pages){
-	for (var i = 0 ; i < pages.length; i++) {
-		$(this).turn(‘addPage’,
-		$(‘<div />’), pages[i]);
-	}
-});
+flipbook.animation.turn(10);
+//replaces
+$('#flipbook').turn('page', 10);
 ```
 
-#### start
-
-This event is triggered before starting the motion of a page.
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | The event object. The default action is to start the animation. Preventing the default action, there wouldn’t be interaction with any corner. |
-| pageObject | Object | The page object. |
-| corner | String | Corner Type. The corners can be: tl, tr, bl, br. |
-
-For instance, if you want to allow only corners at the bottom of the page, you can use the start event:
+#### event
 
 ```javascript
-$(‘#flipbook’).on(‘start’,
-	function(event, pageObject, corner){
-		if (corner==’tl’ || corner==’tr’) {
-			event.preventDefault();
-		}
-});
+flipbook.event.EVENT_NAME = function(){};
+//replaces
+$('#flipbook').on('EVENT_NAME', function(){} );
 ```
 
-You can also use the start event to change the next page of the current page:
+##### List of events
+
+- first
+- last
+- missing
+- turning
+- turned
+- zooming
+
+#### settings
+
+##### disabled
 
 ```javascript
-$(‘#flipbook’).on(‘start’,
-	function(event, pageObject, corner){
-		if (pageObject.page== 1 ) {
-			// pageObject.next of the 1st page is 2,
-			// but let’s change it:
-			pageObject.next = 4 ;
-		}
-});
+flipbook.settings.disabled;
+//replaces
+$('#flipbook').turn('disabled');
+
+flipbook.settings.disabled = true;
+//replaces
+$('#flipbook').turn('disable', true);
 ```
 
-#### turning
+##### autoCenter
 
-This event is triggered before the flipbook turns the page.
+```javascript
+flipbook.settings.autoCenter;
+//replaces
+$('#flipbook').turn('options').autoCenter;
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | The event object. The default action is to allow the flipbook to turn to a page. |
-| page | Number | The new page number |
-| view | Array | The new view |
+flipbook.settings.autoCenter = true;
+//replaces
+$('#flipbook').turn('options',{autoCenter: true});
+```
 
+##### direction
 
-#### turned
+```javascript
+flipbook.settings.direction;
+//replaces
+$('#flipbook').turn('direction');
 
-This event is triggered after the flipbook turned the page.
+flipbook.settings.direction = 'ltr';
+//replaces
+$('#flipbook').turn('direction', 'ltr');
+```
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | The event object. |
-| page | Number | The new page number |
-| view | Array | The new view |
+##### display
 
-#### zooming
+```javascript
+flipbook.settings.display;
+//replaces
+$('#flipbook').turn('display');
 
-This event is triggered when the zoom factor is changed.
+flipbook.settings.display = 'double';
+//replaces
+$('#flipbook').turn('display', 'double');
+```
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| event | Event | The event object. The default action is to zoom. |
-| newFactor | Number | The new zoom factor |
-| current | Number | The current zoom factor |
+##### duration
+
+```javascript
+flipbook.settings.duration;
+//replaces
+$('#flipbook').turn('options').duration;
+
+flipbook.settings.duration = 500;
+//replaces
+$('#flipbook').turn('options',{duration: 500});
+```
+
+##### gradients
+
+```javascript
+flipbook.settings.gradients;
+//replaces
+$('#flipbook').turn('options').gradients;
+
+flipbook.settings.gradients = true;
+//replaces
+$('#flipbook').turn('options',{gradients: true});
+```
+
+##### elevation
+
+```javascript
+flipbook.settings.elevation;
+//replaces
+$('#flipbook').turn('options').elevation;
+
+flipbook.settings.elevation = 50;
+//replaces
+$('#flipbook').turn('options',{elevation: 50});
+```
+
+##### turnCorners
+
+```javascript
+flipbook.settings.turnCorners;
+//replaces
+$('#flipbook').turn('options').turnCorners;
+
+flipbook.settings.turnCorners = 'bl,br';
+//replaces
+$('#flipbook').turn('options',{turnCorners: 'bl,br'});
+```
