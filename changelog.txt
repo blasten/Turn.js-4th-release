@@ -1,4 +1,31 @@
 ------------------------------------------------------
+Turn.js 5-beta0.1 - 2021/08/09
+------------------------------------------------------
+
+turn5.js: actually a wrapper around turn.js
+ready for future jquery dependencies removal
+
+------------------------------------------------------
+Turn.js 4.1.2 - 2021/08/09
+------------------------------------------------------
+
++ No new features or bugfix
++ Deleted unuseful stuff
+
+DETAILS
+	cleanup:
+		+ turn.js: Removed zoom functions
+		+ zoom.js: DELETED
+		+ scissor.js: DELETED
+		+ hash.js: DELETED
+    
+    extras:
+		+ jQuery: 3.4.1 -> 3.6.0 (LASTEST)
+		+ jQueri UI: DELETED
+	
+	samples: keep only basic
+        
+------------------------------------------------------
 Turn.js 4.1.1 - 2019/09/22
 ------------------------------------------------------
 

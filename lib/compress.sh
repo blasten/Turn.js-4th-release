@@ -4,32 +4,21 @@
 
 # --compilation_level ADVANCED_OPTIMIZATIONS 
 
-SCRIPTS=("turn" "zoom" "scissor")
-SCRIPTS_LEN=${#SCRIPTS[@]}
-SCRIPTS_COMMENT="/* turn.js 4.1.1 | Copyright (c) 2012 Emmanuel Garcia - 2019 Raffaele Morganti | turnjs.com | turnjs.com/license.txt */"
+V4_COMMENT="/* turn.js 4.1.2 | Copyright (c) 2012 Emmanuel Garcia - 2021 Raffaele Morganti | turnjs.com | turnjs.com/license.txt */"
+V5_COMMENT="/* turn.js 5-beta0.1 | Copyright (c) */"
+V4="turn"
+V5="turn5"
 
-echo -e "${SCRIPTS_COMMENT}\n" > comment.js
+echo -e "\n${V4_COMMENT}" > ${V4}.comment.js
+echo -e "\n${V5_COMMENT}" > ${V5}.comment.js
 
-for (( i=0; i<${SCRIPTS_LEN}; i++ ));
-do
+java -jar "compiler.jar" --js ${V4}.js > ${V4}.closure.js
+java -jar "compiler.jar" --js ${V5}.js > ${V5}.closure.js
 
-	java -jar "compiler.jar" --js ${SCRIPTS[$i]}.js > ${SCRIPTS[$i]}.closure.js
+cat ${V5}.comment.js ${V5}.closure.js ${V4}.comment.js ${V4}.closure.js > ${V5}.min.js 
 
-	cat comment.js ${SCRIPTS[$i]}.closure.js  > ${SCRIPTS[$i]}.min.js 
+rm ${V4}.comment.js
+rm ${V5}.comment.js
 
-	rm ${SCRIPTS[$i]}.closure.js
-
-	m=$(ls -la ${SCRIPTS[$i]}.min.js | awk '{ print $5}')
-	gzip -nfc --best ${SCRIPTS[$i]}.min.js > ${SCRIPTS[$i]}.min.js.gz
-	g=$(ls -la ${SCRIPTS[$i]}.min.js.gz | awk '{ print $5}')
-	echo " ${SCRIPTS[$i]}.js: $m bytes minified, $g bytes gzipped"
-
-	rm ${SCRIPTS[$i]}.min.js.gz
-
-	if [ "--test" == "$1" ]; then
-		rm ${SCRIPTS[$i]}.min.js
-	fi
-
-done
-
-rm comment.js
+rm ${V4}.closure.js
+rm ${V5}.closure.js
