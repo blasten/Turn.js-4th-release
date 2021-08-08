@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width = 1050, user-scalable = no" />
+<script type="text/javascript" src="../extras/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/turn5.min.js"></script>
+</head>
+<body>
+
+<div class="flipbook-viewport">
+	<div class="container">
+		<div class="flipbook">
+			<div style="background-image:url(pages/1.jpg)"></div>
+			<div style="background-image:url(pages/2.jpg)"></div>
+			<div style="background-image:url(pages/3.jpg)"></div>
+			<div style="background-image:url(pages/4.jpg)"></div>
+			<div style="background-image:url(pages/5.jpg)"></div>
+			<div style="background-image:url(pages/6.jpg)"></div>
+			<div style="background-image:url(pages/7.jpg)"></div>
+			<div style="background-image:url(pages/8.jpg)"></div>
+			<div style="background-image:url(pages/9.jpg)"></div>
+			<div style="background-image:url(pages/10.jpg)"></div>
+			<div style="background-image:url(pages/11.jpg)"></div>
+			<div style="background-image:url(pages/12.jpg)"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+turn = new TurnJS('.flipbook',{
+        // Width
+        width:922,
+        // Height
+        height:600,
+        // Elevation
+        elevation: 50,
+        // Enable gradients
+        gradients: true,
+        // Auto center this flipbook
+        autoCenter: true
+});
+</script>
+
+<style>
+body{
+	overflow:hidden;
+	background-color:#fcfcfc;
+	margin:0;
+	padding:0;
+}
+
+.flipbook-viewport{
+	overflow:hidden;
+	width:100%;
+	height:100%;
+}
+
+.flipbook-viewport .container{
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:auto;
+}
+
+.flipbook-viewport .flipbook{
+	width:922px;
+	height:600px;
+	left:-461px;
+	top:-300px;
+}
+
+.flipbook-viewport .page{
+	width:461px;
+	height:600px;
+	background-color:white;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+
+.flipbook .page{
+	box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+.flipbook-viewport .page img{
+	user-select: none;
+	margin:0;
+}
+
+.flipbook-viewport .shadow{
+	transition: box-shadow 0.5s;
+	box-shadow:0 0 20px #ccc;
+}
+</style>
+
+</body>
+</html>
